@@ -13,7 +13,7 @@ class Appoitment {
 
   date: Date;
 
-  constructor(provider: string, date: Date) {
+  constructor({ date, provider }: Omit<Iappointment, 'id'>) {
     this.provider = provider;
     this.date = date;
     this.id = uuid();

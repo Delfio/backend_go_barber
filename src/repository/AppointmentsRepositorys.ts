@@ -9,8 +9,8 @@ export default class AppointmentsRepositorys {
     this.appointments = [];
   }
 
-  public create(provider: string, date: Date): Appointment {
-    const appointment = new Appointment(provider, date);
+  public create(data: {provider: string, date: Date}): Appointment {
+    const appointment = new Appointment({ provider: data.provider, date: data.date });
     this.appointments.push(appointment);
 
     return appointment;
@@ -22,5 +22,9 @@ export default class AppointmentsRepositorys {
     );
 
     return appointmentExists || null;
+  }
+
+  public all(): Appointment[] | null {
+    return this.appointments;
   }
 }
