@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 import { startOfHour } from 'date-fns';
 import Appointment, { Iappointment } from '../models/Appointments';
 import AppointmentRepository from '../repository/AppointmentsRepositorys';
