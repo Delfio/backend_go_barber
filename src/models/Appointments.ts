@@ -1,11 +1,12 @@
 /* eslint-disable camelcase */
 import {
-  Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn,
+  Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn,
 } from 'typeorm';
+import User from './User';
 
 export interface Iappointment {
   id: string,
-  provider: string,
+  provider_id: string,
   date: Date
 }
 @Entity('appointments')
@@ -14,7 +15,12 @@ class Appoitment {
   id: string;
 
   @Column()
-  provider: string;
+  provider_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'provider_id' })
+  provider: User;
+
 
   @Column('timestamp with time zone')
   date: Date;
