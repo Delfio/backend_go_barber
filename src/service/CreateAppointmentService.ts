@@ -1,3 +1,4 @@
+/* eslint-disable camelcase */
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-unused-vars */
 import { startOfHour } from 'date-fns';
@@ -6,7 +7,7 @@ import Appointment, { Iappointment } from '../models/Appointments';
 import AppointmentRepository from '../repository/AppointmentsRepositorys';
 
 export default class CreateAppointmentService {
-  public async execute({ date, provider }: Omit<Iappointment, 'id'>): Promise<Appointment> {
+  public async execute({ date, provider_id }: Omit<Iappointment, 'id'>): Promise<Appointment> {
     try {
       const appointmentDate = startOfHour(date);
       const appointmentsRepository = getCustomRepository(AppointmentRepository);
@@ -17,7 +18,7 @@ export default class CreateAppointmentService {
       }
 
       const appointment = appointmentsRepository.create({
-        provider, date: appointmentDate,
+        provider_id, date: appointmentDate,
       });
 
       await appointmentsRepository.save(appointment);
