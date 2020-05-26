@@ -25,7 +25,9 @@
         {
           "ts": "never"
         }
-      ]
+      ],
+      "@typescript-eslint/camelcase": "off",
+      "eslint/camelcase": "off"
     },
     "settings": {
       "import/resolver": {
