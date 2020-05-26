@@ -3,6 +3,7 @@ import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
+import authConfig from '../config/Auth';
 
 interface RequestDTO{
   email: string, password: string
@@ -34,9 +35,9 @@ export default class AuthenticateUserService {
       error();
     }
 
-    const token = sign({ }, 'f6ce5a315bb8f41db943c5f467f242c7', {
+    const token = sign({ }, authConfig.jwt.secret, {
       subject: userExists?.id,
-      expiresIn: '1d',
+      expiresIn: authConfig.jwt.expiresIn,
     });
 
     return { User: userExists, token };
