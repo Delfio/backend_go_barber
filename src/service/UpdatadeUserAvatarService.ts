@@ -6,6 +6,7 @@ import path from 'path';
 import fs from 'fs';
 import User from '../models/User';
 import MulterConfig from '../config/upload';
+import AppErrors from '../errors/AppError';
 
 interface RequestDTO {
   user_id: string
@@ -19,7 +20,7 @@ export default class UpdatadeUserAvatarService {
     const userExists = await userRepo.findOne(user_id);
 
     if (!userExists) {
-      throw new Error('Usúario Inválido');
+      throw new AppErrors('Usúario Inválido', 401);
     }
 
     if (userExists.avatar) {

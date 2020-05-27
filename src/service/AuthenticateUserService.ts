@@ -4,6 +4,7 @@ import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import User from '../models/User';
 import authConfig from '../config/Auth';
+import AppErrors from '../errors/AppError';
 
 interface RequestDTO{
   email: string, password: string
@@ -24,7 +25,7 @@ export default class AuthenticateUserService {
 
     // Validações
     const error = () => {
-      throw new Error('Dados para login inválidos');
+      throw new AppErrors('Dados para login inválidos', 401);
     };
     if (!userExists) {
       error();

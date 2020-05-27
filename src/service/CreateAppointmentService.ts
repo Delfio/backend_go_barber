@@ -5,6 +5,7 @@ import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
 import Appointment, { Iappointment } from '../models/Appointments';
 import AppointmentRepository from '../repository/AppointmentsRepositorys';
+import AppErrors from '../errors/AppError';
 
 export default class CreateAppointmentService {
   public async execute({ date, provider_id }: Omit<Iappointment, 'id'>): Promise<Appointment> {
@@ -14,7 +15,7 @@ export default class CreateAppointmentService {
 
       const findAppointmentInSameDate = await appointmentsRepository.findByDate(appointmentDate);
       if (findAppointmentInSameDate) {
-        throw Error('Já existe um agendamento nessa hora');
+        throw new AppErrors('Já existe um agendamento nessa hora');
       }
 
       const appointment = appointmentsRepository.create({
@@ -25,7 +26,7 @@ export default class CreateAppointmentService {
 
       return appointment;
     } catch (err) {
-      throw Error(err.message);
+      throw new AppErrors(err.message);
     }
   }
 }

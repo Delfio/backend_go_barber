@@ -2,6 +2,7 @@
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
 import AuthConfig from '../config/Auth';
+import AppErrors from '../errors/AppError';
 
 interface TokenPayload {
   iat: number;
@@ -20,7 +21,7 @@ export default function ensureAuthenticated(
   console.log(authHeader);
 
   if (!authHeader) {
-    throw new Error('JWT inexistente!');
+    throw new AppErrors('JWT inexistente!', 401);
   }
 
   const [, token] = authHeader.split(' ');
@@ -35,6 +36,6 @@ export default function ensureAuthenticated(
 
     return next();
   } catch {
-    throw new Error('JWT Inválido');
+    throw new AppErrors('JWT Inválido', 401);
   }
 }
