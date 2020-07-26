@@ -3,13 +3,10 @@ import {
   Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn,
 } from 'typeorm';
 
-export interface Iappointment {
-  id: string,
-  provider: string,
-  date: Date
-}
+import IUserEntity from '@modules/users/entities/IUserEntity';
+
 @Entity('users')
-class User {
+class User implements IUserEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

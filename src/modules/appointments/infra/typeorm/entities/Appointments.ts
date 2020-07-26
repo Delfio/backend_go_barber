@@ -2,10 +2,12 @@
 import {
   Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn,
 } from 'typeorm';
+
+import AppointmentEntitye from '@modules/appointments/entities/IAppointments';
 import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('appointments')
-class Appoitment {
+class Appoitment implements AppointmentEntitye {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 

@@ -1,4 +1,4 @@
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
+import Appointment from '@modules/appointments/entities/IAppointments';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO'
 
 export default interface IAppointmentsRepository {
