@@ -1,23 +1,23 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable camelcase */
 
-import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
 import User from '@modules/users/infra/typeorm/entities/User';
 import MulterConfig from '@config/upload';
 import AppErrors from '@shared/errors/AppError';
+import IUserRepository from '@modules/users/repositories/IUsersRepository';
 
-interface RequestDTO {
-  user_id: string
-  avatar_filename: string
+interface IRequestDTO {
+  user_id: string;
+  avatar_filename: string;
  }
 
 export default class UpdatadeUserAvatarService {
-  public async execute({ user_id, avatar_filename }: RequestDTO): Promise<User> {
-    const userRepo = getRepository(User);
+  constructor(private userRepository: IUserRepository) {}
 
-    const userExists = await userRepo.findOne(user_id);
+  public async execute({ user_id, avatar_filename }: IRequestDTO): Promise<User> {
+    const userExists = await await this.userRepository.findByID(user_id);
 
     if (!userExists) {
       throw new AppErrors('Usúario Inválido', 401);
@@ -35,7 +35,7 @@ export default class UpdatadeUserAvatarService {
 
     userExists.avatar = avatar_filename;
 
-    await userRepo.save(userExists);
+    await this.userRepository.updateUser(userExists);
 
     return userExists;
   }

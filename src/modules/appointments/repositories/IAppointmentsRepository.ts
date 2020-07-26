@@ -1,4 +1,4 @@
-import Appointment from '@modules/appointments/entities/IAppointments';
+import Appointment from '@modules/appointments/entities/IAppointmentEntity';
 import ICreateAppointmentDTO from '@modules/appointments/dtos/ICreateAppointmentDTO'
 
 export default interface IAppointmentsRepository {

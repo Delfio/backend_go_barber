@@ -1,27 +1,20 @@
 /* eslint-disable class-methods-use-this */
-import { getRepository } from 'typeorm';
 import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
-import User from '@modules/users/infra/typeorm/entities/User';
 import authConfig from '@config/Auth';
 import AppErrors from '@shared/errors/AppError';
 
-interface RequestDTO{
-  email: string, password: string
-}
-interface ReturnDTO{
-  User: User | undefined,
-  token: string
-}
+import { IRequestForAuthenticateDTO, IReturnUserVerifyDTO } from '@modules/users/dtos/IAuthenticateUserDTO';
+import IUserRepository from '@modules/users/repositories/IUsersRepository';
 
 
 export default class AuthenticateUserService {
-  public async execute({ email, password }:RequestDTO): Promise<ReturnDTO> {
-    const userRepo = getRepository(User);
+  constructor(private userRepository: IUserRepository) {}
 
-    const userExists = await userRepo.findOne({
-      where: { email },
-    });
+  public async execute(
+    { email, password }: IRequestForAuthenticateDTO,
+  ): Promise<IReturnUserVerifyDTO> {
+    const userExists = await this.userRepository.findByEmail(email);
 
     // Validações
     const error = () => {

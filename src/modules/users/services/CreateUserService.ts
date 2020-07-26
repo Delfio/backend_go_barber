@@ -1,22 +1,15 @@
 /* eslint-disable class-methods-use-this */
-import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppErrors from '@shared/errors/AppError';
-
-interface Irequest {
-  name: string;
-  email: string;
-  password: string
-}
+import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import UserRepository from '@modules/users/repositories/IUsersRepository';
 
 export default class CreateUserService {
-  public async execute({ email, name, password }: Irequest): Promise<User> {
-    const userRepository = getRepository(User);
+  constructor(private userRepository: UserRepository) {}
 
-    const emailExists = await userRepository.findOne({
-      where: { email },
-    });
+  public async execute({ email, name, password }: ICreateUserDTO): Promise<User> {
+    const emailExists = await this.userRepository.findByEmail(email);
 
     if (emailExists) {
       throw new AppErrors('E-mail já em uso');
@@ -24,13 +17,12 @@ export default class CreateUserService {
 
     const hashedPassword = await hash(password, 8);
 
-    const user = userRepository.create({
+    const user = await this.userRepository.create({
       name,
       email,
       password: hashedPassword,
     });
 
-    await userRepository.save(user);
 
     return user;
   }

@@ -3,7 +3,7 @@ import {
   Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn,
 } from 'typeorm';
 
-import AppointmentEntitye from '@modules/appointments/entities/IAppointments';
+import AppointmentEntitye from '@modules/appointments/entities/IAppointmentEntity';
 import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('appointments')
