@@ -1,6 +1,24 @@
-test('It sum 1 + 2 to equal 3', () => {
-  const a = 1;
-  const b = 2;
+import FakeAppointmentsRepository from '@modules/appointments/repositories/fakes/FakeAppointmentsRepository';
+import CreateAppointmentService from './CreateAppointmentService';
 
-  expect(a + b).toEqual(3)
+
+describe('CreateAppointment', () => {
+  it('should be able to create a new appointment', async () => {
+    const fakeAppointmentsRepository = new FakeAppointmentsRepository();
+    const createAppointmentService = new CreateAppointmentService(
+      fakeAppointmentsRepository,
+    );
+
+    const appointment = await createAppointmentService.execute({
+      date: new Date(),
+      provider_id: '15155151515',
+    })
+
+    expect(appointment).toHaveProperty('id');
+    expect(appointment.provider_id).toBe('15155151515');
+  });
+
+  // it('should not be able to create two appointments on the same time', () => {
+
+  // })
 })
