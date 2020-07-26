@@ -18,11 +18,9 @@ export default class CreateAppointmentService {
         throw new AppErrors('Já existe um agendamento nessa hora');
       }
 
-      const appointment = appointmentsRepository.create({
+      const appointment = await appointmentsRepository.create({
         provider_id, date: appointmentDate,
       });
-
-      await appointmentsRepository.save(appointment);
 
       return appointment;
     } catch (err) {
