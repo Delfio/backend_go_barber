@@ -4,12 +4,18 @@ import { sign } from 'jsonwebtoken';
 import authConfig from '@config/Auth';
 import AppErrors from '@shared/errors/AppError';
 
+import { injectable, inject } from 'tsyringe';
+
 import { IRequestForAuthenticateDTO, IReturnUserVerifyDTO } from '@modules/users/dtos/IAuthenticateUserDTO';
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
 
 
+@injectable()
 export default class AuthenticateUserService {
-  constructor(private userRepository: IUserRepository) {}
+  constructor(
+    @inject('UsersRepository')
+    private userRepository: IUserRepository,
+  ) {}
 
   public async execute(
     { email, password }: IRequestForAuthenticateDTO,
