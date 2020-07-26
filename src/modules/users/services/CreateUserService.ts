@@ -1,8 +1,8 @@
 /* eslint-disable class-methods-use-this */
 import { getRepository } from 'typeorm';
 import { hash } from 'bcryptjs';
-import User from '../models/User';
-import AppErrors from '../errors/AppError';
+import User from '@modules/users/infra/typeorm/entities/User';
+import AppErrors from '@shared/errors/AppError';
 
 interface Irequest {
   name: string;

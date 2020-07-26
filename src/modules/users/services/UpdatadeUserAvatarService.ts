@@ -4,9 +4,9 @@
 import { getRepository } from 'typeorm';
 import path from 'path';
 import fs from 'fs';
-import User from '../models/User';
-import MulterConfig from '../config/upload';
-import AppErrors from '../errors/AppError';
+import User from '@modules/users/infra/typeorm/entities/User';
+import MulterConfig from '@config/upload';
+import AppErrors from '@shared/errors/AppError';
 
 interface RequestDTO {
   user_id: string

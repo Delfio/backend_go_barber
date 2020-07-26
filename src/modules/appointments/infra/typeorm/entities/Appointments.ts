@@ -2,7 +2,7 @@
 import {
   Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, ManyToOne, JoinColumn,
 } from 'typeorm';
-import User from '../../users/entities/User';
+import User from '@modules/users/infra/typeorm/entities/User';
 
 export interface Iappointment {
   id: string,
