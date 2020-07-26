@@ -2,23 +2,30 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable no-unused-vars */
 import { startOfHour } from 'date-fns';
-import { getCustomRepository } from 'typeorm';
-import Appointment, { Iappointment } from '@modules/appointments/infra/typeorm/entities/Appointments';
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
 import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepositorys';
+
+import IAppointmentDTO from '@modules/appointments/dtos/IAppointmentDTO';
+
 import AppErrors from '@shared/errors/AppError';
 
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
+
 export default class CreateAppointmentService {
-  public async execute({ date, provider_id }: Omit<Iappointment, 'id'>): Promise<Appointment> {
+  constructor(private appointmentsRepository: IAppointmentsRepository) {}
+
+  public async execute({ date, provider_id }: Omit<IAppointmentDTO, 'id'>): Promise<Appointment> {
     try {
       const appointmentDate = startOfHour(date);
-      const appointmentsRepository = getCustomRepository(AppointmentRepository);
 
-      const findAppointmentInSameDate = await appointmentsRepository.findByDate(appointmentDate);
+      const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
+        appointmentDate,
+      );
       if (findAppointmentInSameDate) {
         throw new AppErrors('Já existe um agendamento nessa hora');
       }
 
-      const appointment = await appointmentsRepository.create({
+      const appointment = await this.appointmentsRepository.create({
         provider_id, date: appointmentDate,
       });
 

@@ -4,11 +4,6 @@ import {
 } from 'typeorm';
 import User from '@modules/users/infra/typeorm/entities/User';
 
-export interface Iappointment {
-  id: string,
-  provider_id: string,
-  date: Date
-}
 @Entity('appointments')
 class Appoitment {
   @PrimaryGeneratedColumn('uuid')
