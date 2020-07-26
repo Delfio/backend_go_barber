@@ -3,9 +3,9 @@
 /* eslint-disable no-unused-vars */
 import { startOfHour } from 'date-fns';
 import { getCustomRepository } from 'typeorm';
-import Appointment, { Iappointment } from '../models/Appointments';
-import AppointmentRepository from '../repository/AppointmentsRepositorys';
-import AppErrors from '../errors/AppError';
+import Appointment, { Iappointment } from '../entities/Appointments';
+import AppointmentRepository from '../repositories/AppointmentsRepositorys';
+import AppErrors from '../../../shared/errors/AppError';
 
 export default class CreateAppointmentService {
   public async execute({ date, provider_id }: Omit<Iappointment, 'id'>): Promise<Appointment> {

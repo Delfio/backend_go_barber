@@ -1,7 +1,7 @@
 /* eslint-disable no-unused-vars */
 import { Request, Response, NextFunction } from 'express';
 import { verify } from 'jsonwebtoken';
-import AuthConfig from '../config/Auth';
+import AuthConfig from '../../config/Auth';
 import AppErrors from '../errors/AppError';
 
 interface TokenPayload {

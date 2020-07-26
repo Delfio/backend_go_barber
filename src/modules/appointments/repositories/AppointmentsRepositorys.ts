@@ -1,5 +1,5 @@
 import { EntityRepository, Repository } from 'typeorm';
-import Appointment from '../models/Appointments';
+import Appointment from '../entities/Appointments';
 // Responsável por comunicar com o banco de dados
 
 @EntityRepository(Appointment)
