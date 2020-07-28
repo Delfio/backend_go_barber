@@ -1,5 +1,4 @@
 /* eslint-disable class-methods-use-this */
-import { compare } from 'bcryptjs';
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/Auth';
 import AppErrors from '@shared/errors/AppError';
@@ -8,6 +7,7 @@ import { injectable, inject } from 'tsyringe';
 
 import { IRequestForAuthenticateDTO, IReturnUserVerifyDTO } from '@modules/users/dtos/IAuthenticateUserDTO';
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
+import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
 
 
 @injectable()
@@ -15,6 +15,9 @@ export default class AuthenticateUserService {
   constructor(
     @inject('UsersRepository')
     private userRepository: IUserRepository,
+
+    @inject('HashProvider')
+    private hashProvider: IHashProvider,
   ) {}
 
   public async execute(
@@ -29,7 +32,10 @@ export default class AuthenticateUserService {
     if (!userExists) {
       error();
     }
-    const passwordMatch = await compare(password, userExists!.password);
+    const passwordMatch = await this.hashProvider.compareHash(
+      password,
+        userExists!.password,
+    );
 
     if (!passwordMatch) {
       error();
