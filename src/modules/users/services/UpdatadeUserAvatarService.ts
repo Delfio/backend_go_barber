@@ -8,10 +8,11 @@ import MulterConfig from '@config/upload';
 import AppErrors from '@shared/errors/AppError';
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
 import { injectable, inject } from 'tsyringe';
+import IStorageProvider from '@shared/providers/StorageProvider/models/IStorageProvider';
 
 interface IRequestDTO {
   user_id: string;
-  avatar_filename: string;
+  avatarFileName: string;
  }
 
 @injectable()
@@ -19,9 +20,12 @@ export default class UpdatadeUserAvatarService {
   constructor(
         @inject('UsersRepository')
         private userRepository: IUserRepository,
+
+        @inject('StorageProvider')
+        private storageProvider: IStorageProvider,
   ) {}
 
-  public async execute({ user_id, avatar_filename }: IRequestDTO): Promise<User> {
+  public async execute({ user_id, avatarFileName }: IRequestDTO): Promise<User> {
     const userExists = await await this.userRepository.findByID(user_id);
 
     if (!userExists) {
@@ -30,15 +34,12 @@ export default class UpdatadeUserAvatarService {
 
     if (userExists.avatar) {
       // Deletar avatar anterior
-      const userAvatarFilePath = path.join(MulterConfig.directory, userExists.avatar);
-      const userAvatarFileExists = await fs.promises.stat(userAvatarFilePath);
-
-      if (userAvatarFileExists) {
-        await fs.promises.unlink(userAvatarFilePath);
-      }
+      await this.storageProvider.deleteFile(userExists.avatar);
     }
 
-    userExists.avatar = avatar_filename;
+    const fileName = await this.storageProvider.saveFile(avatarFileName);
+
+    userExists.avatar = fileName;
 
     await this.userRepository.updateUser(userExists);
 
