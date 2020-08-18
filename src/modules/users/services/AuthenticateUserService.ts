@@ -1,4 +1,6 @@
 /* eslint-disable class-methods-use-this */
+import 'reflect-metadata';
+
 import { sign } from 'jsonwebtoken';
 import authConfig from '@config/Auth';
 import AppErrors from '@shared/errors/AppError';

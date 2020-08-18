@@ -1,10 +1,9 @@
 /* eslint-disable class-methods-use-this */
 /* eslint-disable camelcase */
 
-import path from 'path';
-import fs from 'fs';
+import 'reflect-metadata';
+
 import User from '@modules/users/infra/typeorm/entities/User';
-import MulterConfig from '@config/upload';
 import AppErrors from '@shared/errors/AppError';
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
 import { injectable, inject } from 'tsyringe';

@@ -1,8 +1,9 @@
-import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
+
 import CreateUserService from '@modules/users/services/CreateUserService';
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 
 import AppError from '@shared/errors/AppError';
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
 
 describe('CreateUser', () => {
   it('should be able to create a  new user', async () => {

@@ -1,4 +1,7 @@
 /* eslint-disable class-methods-use-this */
+import 'reflect-metadata';
+
+
 import User from '@modules/users/infra/typeorm/entities/User';
 import AppErrors from '@shared/errors/AppError';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';

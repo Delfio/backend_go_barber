@@ -1,10 +1,11 @@
-import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
+
 import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHashProvider';
 
 import AuthenticateUserService from '@modules/users/services/AuthenticateUserService';
 import CreateUserService from '@modules/users/services/CreateUserService';
 
 import AppError from '@shared/errors/AppError';
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
 
 // Necessário criar um usuario para poder autenticar o mesmo;
 describe('AuthenticateUser', () => {

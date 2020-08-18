@@ -1,9 +1,10 @@
-import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
+
 import UpdatadeUserAvatarService from '@modules/users/services/UpdatadeUserAvatarService';
 
 import FakeDiskStorageProvider from '@shared/providers/StorageProvider/fakes/FakeDiskStorageProvider';
 
 import AppError from '@shared/errors/AppError';
+import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
 
 describe('Update user avatar', () => {
   it('should be able to update user avatar', async () => {
