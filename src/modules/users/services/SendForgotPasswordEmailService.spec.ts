@@ -19,7 +19,10 @@ describe('SendForgotPasswordEmail', () => {
       password: 'teste123456',
     })
 
-    const sendForgotPasswordByEmail = new SendForgotRepository(fakeUserRepository);
+    const sendForgotPasswordByEmail = new SendForgotRepository(
+      fakeUserRepository,
+      fakeMailProvider,
+    );
 
     await sendForgotPasswordByEmail.execute({
       email: 'delfio_teste@gmail.com',
