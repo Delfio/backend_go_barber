@@ -3,5 +3,7 @@ dist/
 .env
 temp/*
 
+.devcontainer/
+
 !temp/.gitkeep
 coverage/
