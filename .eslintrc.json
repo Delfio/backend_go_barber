@@ -24,12 +24,12 @@
     ],
     "rules": {
       "import/extensions": [
-        "error",
-        "ignorePackages",
-        {
-          "ts": "never"
-        }
-      ],
+            "error",
+            "ignorePackages",
+            {
+            "ts": "never"
+            }
+        ],
       "@typescript-eslint/camelcase": "off",
       "eslint/camelcase": "off",
       "@typescript-eslint/interface-name-prefix": ["error", {"prefixWithI": "always"}],
