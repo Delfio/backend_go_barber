@@ -1,4 +1,3 @@
-import { IRequestForAuthenticateDTO, IReturnUserVerifyDTO } from '@modules/users/dtos/IAuthenticateUserDTO';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 
 

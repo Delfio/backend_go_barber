@@ -4,7 +4,6 @@
 import { startOfHour } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
-import AppointmentRepository from '@modules/appointments/infra/typeorm/repositories/AppointmentsRepositorys';
 
 import IAppointmentDTO from '@modules/appointments/dtos/IAppointmentDTO';
 

@@ -4,7 +4,7 @@ import { verify } from 'jsonwebtoken';
 import AuthConfig from '@config/Auth';
 import AppErrors from '@shared/errors/AppError';
 
-interface TokenPayload {
+interface ITokenPayload {
   iat: number;
   exp: number;
   sub: string;
@@ -18,8 +18,6 @@ export default function ensureAuthenticated(
   // Validação do token jwt
   const authHeader = request.headers.authorization;
 
-  console.log(authHeader);
-
   if (!authHeader) {
     throw new AppErrors('JWT inexistente!', 401);
   }
@@ -28,7 +26,7 @@ export default function ensureAuthenticated(
 
   try {
     const decoded = verify(token, AuthConfig.jwt.secret);
-    const { sub } = decoded as TokenPayload; // Forçar um tipo de uma váriavel
+    const { sub } = decoded as ITokenPayload; // Forçar um tipo de uma váriavel
 
     request.user = {
       id: sub,
