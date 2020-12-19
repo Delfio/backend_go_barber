@@ -46,7 +46,7 @@ describe('AuthenticateUser', () => {
       fakeHashProvider,
     );
 
-    expect(authenticate.execute({
+    await expect(authenticate.execute({
       email: 'delfio_teste@gmail.com',
       password: '123456',
     })).rejects.toBeInstanceOf(AppError)
@@ -71,7 +71,7 @@ describe('AuthenticateUser', () => {
       password: '123456',
     });
 
-    expect(authenticate.execute({
+    await expect(authenticate.execute({
       email: 'delfio_teste@gmail.com',
       password: 'wrong-password',
     })).rejects.toBeInstanceOf(AppError)
