@@ -9,16 +9,20 @@ services:
       - 3333:3333
     networks:
       - postgres-compose-network
+    depends_on:
+      - "postgresDB"
+    restart: always
 
   postgresDB:
     image: postgres:alpine
     container_name: banco-postgres
     environment:
-      POSTGRES_PASSWORD: "123456"
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=postgres
     ports:
       - "15432:5432"
     volumes:
-      - /home/renatogroffe/Desenvolvimento/Docker-Compose/PostgreSQL:/var/lib/postgresql/data
+      - db_data:/var/lib/postgresql/data
     networks:
       - postgres-compose-network
 
@@ -33,6 +37,9 @@ services:
 #       - postgresDB
 #     networks:
 #       - postgres-compose-network
+
+volumes:
+  db_data:
 
 networks:
   postgres-compose-network:
