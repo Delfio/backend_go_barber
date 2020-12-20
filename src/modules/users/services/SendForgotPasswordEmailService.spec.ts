@@ -9,7 +9,6 @@ import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
 let fakeUserRepository: FakeUserRepository;
 let fakeMailProvider: FakeMailProvider;
 let fakeUserTokenRepository: FakeUserTokenRepository;
-
 let sendForgotPasswordByEmail: SendForgotRepository;
 
 describe('SendForgotPasswordEmail', () => {
