@@ -5,12 +5,18 @@ import FakeHashProvider from '@modules/users/providers/HashProvider/fakes/FakeHa
 import AppError from '@shared/errors/AppError';
 import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
 
-describe('CreateUser', () => {
-  it('should be able to create a  new user', async () => {
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeUserRepository = new FakeUserRepository();
-    const createUser = new CreateUserService(fakeUserRepository, fakeHashProvider);
+let fakeHashProvider: FakeHashProvider;
+let fakeUserRepository: FakeUserRepository;
+let createUser: CreateUserService;
 
+
+describe('CreateUser', () => {
+  beforeEach(() => {
+    fakeHashProvider = new FakeHashProvider();
+    fakeUserRepository = new FakeUserRepository();
+    createUser = new CreateUserService(fakeUserRepository, fakeHashProvider);
+  })
+  it('should be able to create a  new user', async () => {
     const user = await createUser.execute({
       email: 'delfio_teste@gmail.com',
       name: 'Delfio Francisco',
@@ -23,10 +29,6 @@ describe('CreateUser', () => {
   });
 
   it('should be not create a new user with same email', async () => {
-    const fakeHashProvider = new FakeHashProvider();
-    const fakeUserRepository = new FakeUserRepository();
-    const createUser = new CreateUserService(fakeUserRepository, fakeHashProvider);
-
     const user = await createUser.execute({
       email: 'delfio_teste@gmail.com',
       name: 'Delfio Francisco',
