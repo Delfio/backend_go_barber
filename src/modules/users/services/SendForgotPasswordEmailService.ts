@@ -5,6 +5,7 @@ import UserRepository from '@modules/users/repositories/IUsersRepository';
 import IMailProvider from '@shared/providers/MailProvider/models/IMailProvider';
 import AppError from '@shared/errors/AppError';
 import IUserTokenRepository from '@modules/users/repositories/IUserTokensRepository';
+import path from 'path'
 
 @injectable()
 export default class SendForgotPasswordEmailService {
@@ -34,10 +35,10 @@ export default class SendForgotPasswordEmailService {
       },
       subject: '[Gobarber] ~ Recuperação de senha',
       templateData: {
-        template: 'Olá {{name}}: {{token}}',
+        file: path.resolve(__dirname, '..', 'views', 'Forgot_password.hbs'),
         variables: {
           name: user.name,
-          token: userToken.token,
+          link: `http://localhost:3000/resetPassword?tks=${userToken.token}`,
         },
       },
     })
