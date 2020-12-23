@@ -22,12 +22,12 @@
 
 **RF**
 
- - O usuario deve poder atualizar seu nome, e-mail e senha
+ - O usuario deve poder atualizar seu nome, e-mail e senha - OK
 
 **RN**
- - O usuário não deve poder alterar seu e-mail para um e-mail já utilizado
- - Para atualizar sua senha o usuário deve informar a senha antiga
- - Para atualizar sua senha o usuário deve confirmar a nova senha
+ - O usuário não deve poder alterar seu e-mail para um e-mail já utilizado - OK
+ - Para atualizar sua senha o usuário deve informar a senha antiga - OK
+ - Para atualizar sua senha o usuário deve confirmar a nova senha - OK
 
 ## Painel do prestador
 **RF**
