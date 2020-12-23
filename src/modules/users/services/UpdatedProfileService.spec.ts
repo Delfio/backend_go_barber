@@ -59,6 +59,15 @@ describe('Update user profile', () => {
     })).rejects.toBeInstanceOf(AppError);
   });
 
+  it('should be able to updated the profile from non-existing user', async () => {
+    await expect(updatedProfileService.execute({
+      user_id: 'sdfasdfas-asdfasdf-asdfasdf',
+      email: 'joehdoe@gmail.com',
+      name: 'John Doe',
+      password: '15478',
+    })).rejects.toBeInstanceOf(AppError);
+  })
+
   it('should be able to updated the password', async () => {
     const userData: ICreateUserDTO = {
       email: 'joeDoe@gmail.com',
