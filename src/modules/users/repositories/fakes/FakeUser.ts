@@ -33,6 +33,12 @@ implements IUsersRepository {
 
     return user;
   }
+
+  public async returnAllProviders(
+    { except_user_id }: {except_user_id?: string},
+  ): Promise<User[] | undefined> {
+    return this.users.filter((usrs) => usrs.id !== except_user_id);
+  }
 }
 
 export default UsersRepositorys;

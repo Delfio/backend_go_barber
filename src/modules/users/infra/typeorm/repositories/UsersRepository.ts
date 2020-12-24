@@ -1,4 +1,4 @@
-import { getRepository, Repository } from 'typeorm';
+import { getRepository, Repository, Not } from 'typeorm';
 import IUsersRepository from '@modules/users/repositories/IUsersRepository';
 import User from '@modules/users/infra/typeorm/entities/User';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO'
@@ -43,6 +43,20 @@ implements IUsersRepository {
     await this.ormRepository.save(appointments);
 
     return appointments;
+  }
+
+  async returnAllProviders(
+    { except_user_id }: {except_user_id?: string},
+  ): Promise<User[] | undefined> {
+    if (except_user_id) {
+      return this.ormRepository.find({
+        where: {
+          id: Not(except_user_id),
+        },
+      })
+    }
+
+    return this.ormRepository.find();
   }
 }
 
