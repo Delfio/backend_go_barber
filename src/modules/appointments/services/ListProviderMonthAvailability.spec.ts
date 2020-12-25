@@ -24,6 +24,8 @@ describe('List Provider Month Availability', () => {
       const app = eachOfHours.map((hour) => fakeAppointmentRepository.create({
         provider_id: providerId,
         date: new Date(2020, 4, 20, hour),
+        user_id: 'd5f4d5f4-5d4f5d45f4df54-d54f5df4d4f54',
+
       }))
 
       await app;
@@ -31,6 +33,8 @@ describe('List Provider Month Availability', () => {
       await fakeAppointmentRepository.create({
         provider_id: providerId,
         date: new Date(2020, 4, 21, 8),
+        user_id: 'd5f4d5f4-5d4f5d45f4df54-d54f5df4d4f54',
+
       })
     })();
 

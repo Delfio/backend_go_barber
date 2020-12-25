@@ -26,10 +26,11 @@ implements IAppointmentRepository {
     return appointmentExists;
   }
 
-  public async create({ date, provider_id }: ICreateAppointmentDTO): Promise<Appointment> {
+  public async create({ date, provider_id, user_id }: ICreateAppointmentDTO): Promise<Appointment> {
     const appointments = this.ormRepository.create({
       provider_id,
       date,
+      user_id,
     });
 
     await this.ormRepository.save(appointments);

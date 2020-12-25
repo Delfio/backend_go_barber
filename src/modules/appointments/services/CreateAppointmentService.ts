@@ -1,15 +1,10 @@
-/* eslint-disable camelcase */
-/* eslint-disable class-methods-use-this */
-/* eslint-disable no-unused-vars */
 import { startOfHour } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
-
-import IAppointmentDTO from '@modules/appointments/dtos/IAppointmentDTO';
-
 import AppErrors from '@shared/errors/AppError';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
+import { ICreateAppointmentDTO } from '../dtos';
 
 @injectable()
 export default class CreateAppointmentService {
@@ -18,7 +13,9 @@ export default class CreateAppointmentService {
     private appointmentsRepository: IAppointmentsRepository,
   ) {}
 
-  public async execute({ date, provider_id }: Omit<IAppointmentDTO, 'id'>): Promise<Appointment> {
+  public async execute(
+    { date, provider_id, user_id }: ICreateAppointmentDTO,
+  ): Promise<Appointment> {
     try {
       const appointmentDate = startOfHour(date);
 
@@ -30,7 +27,7 @@ export default class CreateAppointmentService {
       }
 
       const appointment = await this.appointmentsRepository.create({
-        provider_id, date: appointmentDate,
+        provider_id, date: appointmentDate, user_id,
       });
 
       return appointment;

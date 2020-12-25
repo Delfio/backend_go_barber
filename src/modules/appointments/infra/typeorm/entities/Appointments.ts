@@ -14,10 +14,16 @@ class Appoitment implements AppointmentEntitye {
   @Column()
   provider_id: string;
 
-  @ManyToOne(() => User)
+  @Column()
+  user_id: string;
+
+  @ManyToOne(() => User, { eager: true })
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
+  @ManyToOne(() => User, { eager: true })
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column('timestamp with time zone')
   date: Date;
