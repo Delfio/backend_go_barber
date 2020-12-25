@@ -51,15 +51,19 @@ implements IAppointmentRepository {
      * Raw(dateFieldName => `to_char(${dateFieldName}, 'MM-YYYY') = '${month}-${yar}'`)
      * // Porem o mês do psql é 01 02 e o nosso é 1 2 3 - necessário fazer parser
      */
-    return this.ormRepository.find({
+    const appointments = await this.ormRepository.find({
       where: {
         provider_id,
-        data: Between(
+        date: Between(
           startOfMonth(currentDate),
           endOfMonth(currentDate),
         ),
       },
-    })
+    });
+
+    console.log(appointments)
+
+    return appointments;
   }
 
   async findAllInDayFromProvider(
@@ -75,7 +79,7 @@ implements IAppointmentRepository {
     return this.ormRepository.find({
       where: {
         provider_id,
-        data: Between(
+        date: Between(
           startOfMonth(currentDate),
           endOfMonth(currentDate),
         ),
