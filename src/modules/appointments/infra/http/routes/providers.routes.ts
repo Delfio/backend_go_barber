@@ -7,6 +7,6 @@ const providerController = new ProviderController();
 
 providerRouter.use(ensureAuthenticated);
 
-providerRouter.get('/all', providerController.index)
+providerRouter.get('/', providerController.index)
 
 export default providerRouter;

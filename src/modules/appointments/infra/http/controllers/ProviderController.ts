@@ -11,8 +11,16 @@ export default class ProviderController {
 
     const providers = await listProvidersService.execute({
       user_id: id,
-    })
+    });
 
-    return response.json(providers);
+    const result = providers.map((user) => {
+      const {
+        avatar, created_at, email, id: ProviderID, name, updated_at,
+      } = user;
+      return {
+        avatar, created_at, email, ProviderID, name, updated_at,
+      }
+    })
+    return response.json(result);
   }
 }
