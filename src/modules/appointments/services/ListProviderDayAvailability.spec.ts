@@ -17,9 +17,8 @@ describe('List Provider Day Availability', () => {
 
     (async (): Promise<void> => {
       const eachOfHours = [
-        8, 9, 15, 16,
+        15, 16,
       ];
-
 
       const app = eachOfHours.map((hour) => fakeAppointmentRepository.create({
         provider_id: providerId,
@@ -27,6 +26,8 @@ describe('List Provider Day Availability', () => {
       }))
 
       await app;
+
+      jest.spyOn(Date, 'now').mockImplementationOnce(() => new Date(2020, 4, 20, 11).getTime())
 
       await fakeAppointmentRepository.create({
         provider_id: providerId,
@@ -44,8 +45,10 @@ describe('List Provider Day Availability', () => {
     expect(availability).toEqual(expect.arrayContaining([
       { hour: 8, available: false },
       { hour: 9, available: false },
-      { hour: 10, available: true },
-      { hour: 11, available: true },
+      { hour: 10, available: false },
+      { hour: 11, available: false },
+      { hour: 12, available: true },
+      { hour: 13, available: true },
       { hour: 15, available: false },
       { hour: 16, available: false },
       { hour: 17, available: true },
