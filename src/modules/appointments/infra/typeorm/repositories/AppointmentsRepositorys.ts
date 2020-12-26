@@ -61,7 +61,6 @@ implements IAppointmentRepository {
       },
     });
 
-    console.log(appointments)
 
     return appointments;
   }
@@ -84,7 +83,7 @@ implements IAppointmentRepository {
           endOfMonth(currentDate),
         ),
       },
-    })
+    });
   }
 }
 
