@@ -1,5 +1,7 @@
+import { ObjectID } from 'mongodb';
+
 export default interface INotificationEntity {
-    id: any;
+    id: ObjectID;
 
     content: string;
 
