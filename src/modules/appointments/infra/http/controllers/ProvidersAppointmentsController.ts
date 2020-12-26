@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import ListProvidersAppointments from '@modules/appointments/services/ListProvidersAppointments';
+import { classToClass } from 'class-transformer';
 
 export default class ProvidersAppointmentsController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -25,12 +26,8 @@ export default class ProvidersAppointmentsController {
 
 
     const formatedAppointments = appointments.map((appointment) => {
-      delete appointment.provider.password;
-      delete appointment.provider.created_at;
-      delete appointment.provider.updated_at;
-      delete appointment.user.password;
-      delete appointment.user.created_at;
-      delete appointment.user.updated_at;
+      appointment.provider = classToClass(appointment.provider);
+      appointment.user = classToClass(appointment.user);
       return appointment;
     })
 

@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import ListProvidersService from '@modules/appointments/services/ListProvidersService';
-
+import { classToClass } from 'class-transformer';
 
 export default class ProviderController {
   public async index(request: Request, response: Response): Promise<Response> {
@@ -13,14 +13,7 @@ export default class ProviderController {
       user_id: id,
     });
 
-    const result = providers.map((user) => {
-      const {
-        avatar, created_at, email, id: ProviderID, name, updated_at,
-      } = user;
-      return {
-        avatar, created_at, email, ProviderID, name, updated_at,
-      }
-    })
+    const result = providers.map((user) => classToClass(user))
     return response.json(result);
   }
 }

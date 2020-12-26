@@ -15,15 +15,9 @@ profileRoutes.put(
       name: Joi.string().required(),
       email: Joi.string().email().required(),
       password: Joi.string(),
-      old_password: Joi.string()
-        .when('password', {
-          is: Joi.required(),
-        }),
+      old_password: Joi.string(),
       password_confirmation: Joi.string()
-        .valid(Joi.ref('password'))
-        .when('password', {
-          is: Joi.required(),
-        }),
+        .valid(Joi.ref('password')),
     },
   }),
   profileController.create,

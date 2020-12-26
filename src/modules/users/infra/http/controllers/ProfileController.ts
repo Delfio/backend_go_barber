@@ -2,6 +2,7 @@ import UpdatedProfileService from '@modules/users/services/UpdatedProfileService
 import { Request, Response } from 'express';
 import { container } from 'tsyringe';
 import ShowProfileService from '@modules/users/services/ShowProfileService';
+import { classToClass } from 'class-transformer';
 
 class ProfileController {
   public async show(
@@ -17,9 +18,10 @@ class ProfileController {
       user_id: id,
     });
 
-    delete user.password;
 
-    return res.json(user);
+    return res.json({
+      user: classToClass(user),
+    });
   }
 
   public async create(
@@ -46,9 +48,9 @@ class ProfileController {
       password,
     });
 
-    delete user.password;
-
-    return res.json(user);
+    return res.json({
+      user: classToClass(user),
+    });
   }
 }
 
