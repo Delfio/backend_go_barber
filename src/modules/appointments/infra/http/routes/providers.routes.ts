@@ -12,14 +12,17 @@ const providerController = new ProviderController();
 
 providerRouter.use(ensureAuthenticated);
 
-providerRouter.get('/', providerController.index)
+providerRouter.get('/', providerController.index);
+
 providerRouter.get(
   '/availability/:provider_id/monthAvailability',
   providerMonthAvailabilityController.index,
-)
+);
+
 providerRouter.get(
   '/availability/:provider_id/dayAvailability',
   providerDayAvailabilityController.index,
-)
+);
+
 
 export default providerRouter;
