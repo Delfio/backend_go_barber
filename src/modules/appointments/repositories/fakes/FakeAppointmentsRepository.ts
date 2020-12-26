@@ -53,7 +53,7 @@ implements IAppointmentRepository {
   ): Promise<Appointment[]> {
     return this.appointments.filter((appointment) => appointment.provider_id === provider_id
         && getDate(appointment.date) === day
-        && getMonth(appointment.date) + 1 === month
+        && getMonth(appointment.date) === month
         && getYear(appointment.date) === year);
   }
 }

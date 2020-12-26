@@ -26,10 +26,9 @@ describe('List Provider Day Availability', () => {
         user_id: 'd5f4d5f4-5d4f5d45f4df54-d54f5df4d4f54',
 
       }))
-
-      await app;
-
       jest.spyOn(Date, 'now').mockImplementationOnce(() => new Date(2020, 4, 20, 11).getTime())
+
+      await Promise.all(app);
 
       await fakeAppointmentRepository.create({
         provider_id: providerId,

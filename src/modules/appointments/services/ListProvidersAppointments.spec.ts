@@ -35,7 +35,7 @@ describe('List providers appointments', () => {
       (scheduledAppointments) => {
         listProvidersAppointmentsService.execute({
           day,
-          month: 5,
+          month,
           provider_id,
           year,
         }).then((appointmentsResolver) => {
