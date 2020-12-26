@@ -12,12 +12,14 @@ import UsersRepository from '@modules/users/infra/typeorm/repositories/UsersRepo
 import UserTokensRepository from '@modules/users/infra/typeorm/repositories/UserTokensRepository';
 import UserToken from '@modules/users/infra/typeorm/entities/UserToken';
 
-// import IMailProvider from '../providers/MailProvider/models/IMailProvider';
+import INotificationsRepositorie from '@modules/notifications/repositories/INotificationsRepositorie';
+import NotificationsRepository from '@modules/notifications/infra/typeorm/repositories/NotificationsRepository';
+
 
 container.registerSingleton<IAppointmentsRepository>(
   'AppointmentsRepository',
   AppointmentsRepository,
-)
+);
 
 container.registerSingleton<IUsersRepository>(
   'UsersRepository',
@@ -32,4 +34,9 @@ container.registerSingleton<UserTokensRepository>(
 container.registerSingleton<UserToken>(
   'UserToken',
   UserToken,
+);
+
+container.registerSingleton<INotificationsRepositorie>(
+  'NotificationsRepository',
+  NotificationsRepository,
 );

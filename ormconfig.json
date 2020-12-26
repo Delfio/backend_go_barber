@@ -1,17 +1,33 @@
-{
-  "type" : "postgres",
-  "host": "banco-postgres",
-  "port": 5432,
-  "username": "postgres",
-  "password": "123456",
-  "database": "gostack_gobarber",
-  "entities": [
-    "./src/modules/**/infra/typeorm/entities/*.ts"
-  ],
-  "migrations": [
-    "./src/shared/infra/typeorm/migrations/*.ts"
-  ],
-  "cli": {
-    "migrationsDir":  "./src/shared/infra/typeorm/migrations/*.ts"
-  }
-}
+[
+    {
+        "name": "default",
+        "type" : "postgres",
+        "host": "localhost",
+        "port": 15432,
+        "username": "postgres",
+        "password": "123456",
+        "database": "gostack_gobarber",
+        "entities": [
+          "./src/modules/**/infra/typeorm/entities/*.ts"
+        ],
+        "migrations": [
+          "./src/shared/infra/typeorm/migrations/*.ts"
+        ],
+        "cli": {
+          "migrationsDir":  "./src/shared/infra/typeorm/migrations"
+        }
+    },
+    {
+        "name": "mongo",
+        "type" : "mongodb",
+        "url": "mongodb+srv://master:pass12345@cluster0.hpai6.mongodb.net/go_barber?retryWrites=true&w=majority",
+        "useUnifiedTopology": true,
+        "useNewUrlParser": true,
+        "synchronize": true,
+        "logging": true,
+        "entities": [
+          "./src/modules/**/infra/typeorm/schemas/*.ts"
+        ]
+      }
+
+]
