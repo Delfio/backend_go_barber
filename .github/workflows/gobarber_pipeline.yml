@@ -30,3 +30,6 @@ jobs:
     - run: yarn test
       env:
         CI: true
+        APP_SECRETS: teste123456teste
+        APP_WEB_URL: http://localhost:3000
+        APP_API_URL: http:localhost:3333

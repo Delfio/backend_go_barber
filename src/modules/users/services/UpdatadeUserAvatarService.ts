@@ -3,11 +3,11 @@
 
 import 'reflect-metadata';
 
-import User from '@modules/users/infra/typeorm/entities/User';
 import AppErrors from '@shared/errors/AppError';
 import IUserRepository from '@modules/users/repositories/IUsersRepository';
 import { injectable, inject } from 'tsyringe';
 import IStorageProvider from '@shared/providers/StorageProvider/models/IStorageProvider';
+import IUserEntity from '../entities/IUserEntity';
 
 interface IRequestDTO {
   user_id: string;
@@ -24,7 +24,7 @@ export default class UpdatadeUserAvatarService {
         private storageProvider: IStorageProvider,
   ) {}
 
-  public async execute({ user_id, avatarFileName }: IRequestDTO): Promise<User> {
+  public async execute({ user_id, avatarFileName }: IRequestDTO): Promise<IUserEntity> {
     const userExists = await await this.userRepository.findByID(user_id);
 
     if (!userExists) {

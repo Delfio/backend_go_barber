@@ -1,9 +1,9 @@
-import User from '@modules/users/infra/typeorm/entities/User';
+import IUserEntity from '../entities/IUserEntity';
 
 export interface IRequestForAuthenticateDTO{
   email: string; password: string;
 }
 export interface IReturnUserVerifyDTO{
-  User: User | undefined;
+  User: IUserEntity | undefined;
   token: string;
 }

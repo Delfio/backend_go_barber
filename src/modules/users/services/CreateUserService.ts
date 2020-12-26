@@ -2,13 +2,13 @@
 import 'reflect-metadata';
 
 
-import User from '@modules/users/infra/typeorm/entities/User';
 import AppErrors from '@shared/errors/AppError';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
 import { injectable, inject } from 'tsyringe';
 import UserRepository from '@modules/users/repositories/IUsersRepository';
 
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import IUserEntity from '../entities/IUserEntity';
 
 @injectable()
 export default class CreateUserService {
@@ -19,7 +19,7 @@ export default class CreateUserService {
       private hashProvider: IHashProvider,
   ) {}
 
-  public async execute({ email, name, password }: ICreateUserDTO): Promise<User> {
+  public async execute({ email, name, password }: ICreateUserDTO): Promise<IUserEntity> {
     const emailExists = await this.userRepository.findByEmail(email);
 
     if (emailExists) {

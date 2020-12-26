@@ -2,12 +2,12 @@ import {
   startOfHour, isBefore, getHours, format,
 } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
 
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import AppError from '@shared/errors/AppError';
 import INotificationsRepositories from '@modules/notifications/repositories/INotificationsRepositorie';
 import { ICreateAppointmentDTO } from '../dtos';
+import IAppointmentEntity from '../entities/IAppointmentEntity';
 
 @injectable()
 export default class CreateAppointmentService {
@@ -20,7 +20,7 @@ export default class CreateAppointmentService {
 
   public async execute(
     { date, provider_id, user_id }: ICreateAppointmentDTO,
-  ): Promise<Appointment> {
+  ): Promise<IAppointmentEntity> {
     try {
       if (isBefore(date, Date.now())) {
         throw new AppError('Yout Can\'t create an appointment on a past date!');
