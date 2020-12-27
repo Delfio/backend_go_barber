@@ -8,9 +8,11 @@ import uploadConfig from '@config/upload';
 import UsersControllers from '../controllers/UsersController';
 import UserAvatarController from '../controllers/UserAvatarController';
 
+const { multer: MulterConfig } = uploadConfig.config;
 
 const usersRouter = Router();
-const upload = multer(uploadConfig);
+const upload = multer(MulterConfig);
+
 const userAvatarController = new UserAvatarController();
 
 const usersController = new UsersControllers();

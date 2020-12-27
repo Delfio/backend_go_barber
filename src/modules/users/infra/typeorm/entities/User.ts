@@ -7,6 +7,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 import { Exclude, Expose } from 'class-transformer';
+import UploadConfig from '@config/upload';
 
 import IUserEntity from '@modules/users/entities/IUserEntity';
 
@@ -36,9 +37,17 @@ class User implements IUserEntity {
 
   @Expose({ name: 'avatar_url' })
   getAvatarUrl(): string | null {
-    return this.avatar
-      ? `${process.env.APP_API_URL}/files/${this.avatar}`
-      : null
+    if (!this.avatar) {
+      return null
+    }
+    switch (UploadConfig.driver) {
+      case 'azure':
+        return `${UploadConfig.config.azure.url}${UploadConfig.config.azure.container}/${this.avatar}`
+      case 'disk':
+        return `${process.env.APP_API_URL}/files/${this.avatar}`
+      default:
+        return null
+    }
   }
 }
 export default User;
