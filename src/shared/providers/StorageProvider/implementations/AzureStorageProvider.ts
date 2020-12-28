@@ -29,25 +29,21 @@ class AzureStorageProvider implements IStorageProvider {
 
     async saveFile(file: string): Promise<string> {
       const originalPath = path.resolve(UploadConfig.tmpFolder, file);
-      const promisseFile = new Promise((resolve, reject) => {
-        this.blobService.createBlockBlobFromLocalFile(
-          this.containerName,
-          file,
-          originalPath,
-          (err, result) => {
-            if (!err) {
-              return resolve(result)
+      
+      this.blobService.createBlockBlobFromLocalFile(
+         this.containerName,
+         file,
+         originalPath,
+         (err, result) => {
+            if (err) {
+               console.error(err)
             }
-            return reject(err)
-          },
-        )
-      });
-
+         },
+      )
+      
       await fs.promises.unlink(originalPath);
 
-      return Promise
-        .resolve(promisseFile)
-        .then(() => file)
+      return file;
     }
 
     async deleteFile(file: string): Promise<void> {
