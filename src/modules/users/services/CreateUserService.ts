@@ -8,6 +8,7 @@ import { injectable, inject } from 'tsyringe';
 import UserRepository from '@modules/users/repositories/IUsersRepository';
 
 import IHashProvider from '@modules/users/providers/HashProvider/models/IHashProvider';
+import ICacheProvider from '@shared/providers/CacheProvider/models/ICacheProvider';
 import IUserEntity from '../entities/IUserEntity';
 
 @injectable()
@@ -17,6 +18,8 @@ export default class CreateUserService {
       private userRepository: UserRepository,
       @inject('HashProvider')
       private hashProvider: IHashProvider,
+      @inject('CacheProvider')
+      private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute({ email, name, password }: ICreateUserDTO): Promise<IUserEntity> {
@@ -34,6 +37,8 @@ export default class CreateUserService {
       password: hashedPassword,
     });
 
+    await this.cacheProvider
+      .invalidadePrefix('providers-list');
 
     return user;
   }

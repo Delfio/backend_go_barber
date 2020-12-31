@@ -6,22 +6,24 @@ import CreateUserService from '@modules/users/services/CreateUserService';
 
 import AppError from '@shared/errors/AppError';
 import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
+import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCacheProvider';
 
 let fakeUserRepository: FakeUserRepository
 let fakeHashProvider: FakeHashProvider
 
 let createUserService: CreateUserService;
 let authenticate: AuthenticateUserService;
-
+let fkeCacheProvider: FakeCacheProvider;
 // Necessário criar um usuario para poder autenticar o mesmo;
 describe('AuthenticateUser', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository()
     fakeHashProvider = new FakeHashProvider()
-
+    fkeCacheProvider = new FakeCacheProvider();
     createUserService = new CreateUserService(
       fakeUserRepository,
       fakeHashProvider,
+      fkeCacheProvider,
     );
     authenticate = new AuthenticateUserService(
       fakeUserRepository,

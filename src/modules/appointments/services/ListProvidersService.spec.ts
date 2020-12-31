@@ -1,16 +1,19 @@
 import FakeUserRepository from '@modules/users/repositories/fakes/FakeUser';
 import ICreateUserDTO from '@modules/users/dtos/ICreateUserDTO';
+import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCacheProvider';
 import ListProvidersService from './ListProvidersService';
 
 let fakeUserRepository: FakeUserRepository;
 let listProvidersService: ListProvidersService;
-
+let fkeCacheProvider: FakeCacheProvider;
 
 describe('Providers', () => {
   beforeEach(() => {
     fakeUserRepository = new FakeUserRepository();
+    fkeCacheProvider = new FakeCacheProvider();
     listProvidersService = new ListProvidersService(
       fakeUserRepository,
+      fkeCacheProvider,
     );
   })
   it('I hope all providers return to me', () => {

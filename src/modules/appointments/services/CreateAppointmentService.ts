@@ -6,8 +6,10 @@ import { injectable, inject } from 'tsyringe';
 import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import AppError from '@shared/errors/AppError';
 import INotificationsRepositories from '@modules/notifications/repositories/INotificationsRepositorie';
+import ICacheProvider from '@shared/providers/CacheProvider/models/ICacheProvider';
 import { ICreateAppointmentDTO } from '../dtos';
 import IAppointmentEntity from '../entities/IAppointmentEntity';
+import AppointmentsCacheKey from '../utils/AppointmentsConstants';
 
 @injectable()
 export default class CreateAppointmentService {
@@ -16,6 +18,8 @@ export default class CreateAppointmentService {
     private appointmentsRepository: IAppointmentsRepository,
     @inject('NotificationsRepository')
     private notificationsRepository: INotificationsRepositories,
+    @inject('CacheProvider')
+    private cacheProvider: ICacheProvider,
   ) {}
 
   public async execute(
@@ -52,7 +56,23 @@ export default class CreateAppointmentService {
       await this.notificationsRepository.create({
         content: `Novo agendamento para dia ${dateFormated}`,
         recipient_id: provider_id,
-      })
+      });
+
+      (async (): Promise<void> => {
+        const data = {
+          year: date.getFullYear(),
+          month: date.getMonth() + 1,
+          day: date.getDate(),
+        }
+
+        await this.cacheProvider
+          .invalidade(
+            AppointmentsCacheKey({
+              ...data,
+              provider_id,
+            }),
+          );
+      })()
 
       return appointment;
     } catch (err) {
