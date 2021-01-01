@@ -1,7 +1,11 @@
 node_modules/
 dist/
 .env
-temp/*
+
+temp/**/*.png
+temp/**/*.jpg
+temp/**/*.jpeg
+temp/**/*.log
 
 ormconfig.json
 

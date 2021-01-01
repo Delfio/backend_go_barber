@@ -13,7 +13,7 @@ const redisCliente = createClient({
   enable_offline_queue: false,
 });
 
-const maxWrongAttemptyByIPperMinute = 5;
+const maxWrongAttemptyByIPperMinute = 10;
 const maxWrongAttemptsByIPperDay = 100;
 
 

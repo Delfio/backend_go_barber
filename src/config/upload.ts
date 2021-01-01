@@ -2,7 +2,7 @@ import path from 'path';
 import crypto from 'crypto';
 import multer, { StorageEngine } from 'multer';
 
-const tempFolder = path.resolve(__dirname, '..', '..', 'temp');
+const tempFolder = path.resolve(__dirname, '..', '..', 'temp', 'imgs');
 
 type IUploadConfig = {
     driver: 'azure' | 'disk';
