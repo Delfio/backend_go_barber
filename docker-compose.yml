@@ -8,9 +8,10 @@ services:
     ports:
       - 3333:3333
     networks:
-      - postgres-compose-network
+      - gobarber-network
     depends_on:
       - "postgresDB"
+      - "redisDB"
     restart: always
 
   postgresDB:
@@ -18,14 +19,25 @@ services:
     container_name: banco-postgres
     environment:
       - POSTGRES_PASSWORD=123456
-      - POSTGRES_DB=postgres
+      - POSTGRES_DB=gostack_gobarber
     ports:
       - "15432:5432"
-    volumes:
-      - db_data:/var/lib/postgresql/data
+    # volumes:
+    #   - db_data:/var/lib/postgresql/data
     networks:
-      - postgres-compose-network
+      - gobarber-network
+    restart: always
 
+  redisDB:
+    image: redis
+    container_name: banco-redis
+    ports:
+      - "6379:6379"
+    # volumes:
+    #   - db_cache:/usr/local/etc/redis
+    networks:
+      - gobarber-network
+    restart: always
 #   pgAdmin:
 #     image: dpage/pgadmin4
 #     environment:
@@ -36,11 +48,12 @@ services:
 #     depends_on:
 #       - postgresDB
 #     networks:
-#       - postgres-compose-network
+#       - gobarber-network
 
-volumes:
-  db_data:
+# volumes:
+#   db_data: {}
+#   db_cache: {}
 
 networks:
-  postgres-compose-network:
+  gobarber-network:
     driver: bridge
