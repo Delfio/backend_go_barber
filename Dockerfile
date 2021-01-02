@@ -2,18 +2,13 @@ FROM node:14
 
 WORKDIR /usr/src/app
 
-# Install app dependencies
-# A wildcard is used to ensure both package.json AND package-lock.json are copied
-# where available (npm@5+)
 COPY package*.json ./
 
-RUN yarn
-# If you are building your code for production
-# RUN npm ci --only=production
+RUN npm install --production
 
-# Bundle app source
 COPY . .
+RUN npm run typeorm migration:run
 
 EXPOSE 3333
 
-CMD [ "yarn", "dev:start" ]
+CMD [ "npm", "run", "server:start" ]

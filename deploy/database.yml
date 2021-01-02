@@ -1,0 +1,47 @@
+
+version: '3'
+
+services:
+  postgresDB:
+    image: postgres:alpine
+    container_name: banco-postgres
+    environment:
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=gostack_gobarber
+    ports:
+      - "15432:5432"
+    # volumes:
+    #   - db_data:/var/lib/postgresql/data
+    networks:
+      - gobarber-network
+    restart: always
+
+  redisDB:
+    image: redis
+    container_name: banco-redis
+    ports:
+      - "6379:6379"
+    # volumes:
+    #   - db_cache:/usr/local/etc/redis
+    networks:
+      - gobarber-network
+    restart: always
+#   pgAdmin:
+#     image: dpage/pgadmin4
+#     environment:
+#       PGADMIN_DEFAULT_EMAIL: "delfio_eu@hotmail.com"
+#       PGADMIN_DEFAULT_PASSWORD: "123456"
+#     ports:
+#       - "16543:80"
+#     depends_on:
+#       - postgresDB
+#     networks:
+#       - gobarber-network
+
+# volumes:
+#   db_data: {}
+#   db_cache: {}
+
+networks:
+  gobarber-network:
+    driver: bridge
