@@ -1,4 +1,5 @@
 import ICacheProvider from '@shared/providers/CacheProvider/models/ICacheProvider';
+import { classToClass } from 'class-transformer';
 import 'reflect-metadata';
 
 import { injectable, inject } from 'tsyringe';
@@ -12,7 +13,6 @@ type IRequest = {
     year: number;
     day: number;
 }
-
 
 @injectable()
 class ListProvidersAppointmentsService {
@@ -45,12 +45,14 @@ class ListProvidersAppointmentsService {
           year,
         });
 
+      const formatedAppointments = classToClass(appointments);
+
       await this.cacheProvider.save(
         cacheKey,
-        JSON.stringify(appointments),
+        JSON.stringify(formatedAppointments),
       );
 
-      return appointments;
+      return formatedAppointments;
     }
 
     return cacheData;

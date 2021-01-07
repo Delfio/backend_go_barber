@@ -10,14 +10,14 @@ import {
   IFindAllInMonthFromProviderRequest,
 } from '@modules/appointments/dtos'
 
-
 class AppointmentsRepositorys
 implements IAppointmentRepository {
   private appointments: Appointment[] = [];
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(date: Date, provider_id: string): Promise<Appointment | undefined> {
     const appointmentByDate = this.appointments.find(
-      (appointment) => isEqual(appointment.date, date),
+      (appointment) => isEqual(appointment.date, date)
+      && appointment.provider_id === provider_id,
     );
 
     return appointmentByDate;
@@ -28,7 +28,7 @@ implements IAppointmentRepository {
 
     Object.assign(appointment, {
       id: uuid(), date, provider_id, user_id,
-    })
+    });
 
     this.appointments.push(appointment);
 
@@ -51,10 +51,12 @@ implements IAppointmentRepository {
       year,
     }: IFindAllAvailableTimesForAProviderInAMonth,
   ): Promise<Appointment[]> {
-    return this.appointments.filter((appointment) => appointment.provider_id === provider_id
-        && getDate(appointment.date) === day
-        && getMonth(appointment.date) === month
-        && getYear(appointment.date) === year);
+    return this.appointments.filter((appointment) => (
+      appointment.provider_id === provider_id
+          && getDate(appointment.date) === day
+          && getMonth(appointment.date) + 1 === month
+          && getYear(appointment.date) === year
+    ));
   }
 }
 

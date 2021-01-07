@@ -43,11 +43,11 @@ class AzureStorageProvider implements IStorageProvider {
         )
       });
 
+      await Promise.resolve(promisseFile);
+
       await fs.promises.unlink(originalPath);
 
-      return Promise
-        .resolve(promisseFile)
-        .then(() => file)
+      return file;
     }
 
     async deleteFile(file: string): Promise<void> {

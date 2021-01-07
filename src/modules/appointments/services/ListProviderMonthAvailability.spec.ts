@@ -4,6 +4,7 @@ import FakeAppointmentRepository from '../repositories/fakes/FakeAppointmentsRep
 let listProviderMonthAvailability: ListProviderMonthAvailability;
 let fakeAppointmentRepository: FakeAppointmentRepository;
 
+
 describe('List Provider Month Availability', () => {
   beforeEach(() => {
     fakeAppointmentRepository = new FakeAppointmentRepository();
@@ -17,18 +18,17 @@ describe('List Provider Month Availability', () => {
 
     (async (): Promise<void> => {
       const eachOfHours = [
-        8, 9, 10, 11, 13, 14, 15, 16, 17, 18,
+        8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18,
       ];
 
-
-      const app = eachOfHours.map((hour) => fakeAppointmentRepository.create({
+      const appointments = eachOfHours.map((hour) => fakeAppointmentRepository.create({
         provider_id: providerId,
         date: new Date(2020, 4, 20, hour),
         user_id: 'd5f4d5f4-5d4f5d45f4df54-d54f5df4d4f54',
 
       }))
 
-      await app;
+      await Promise.all(appointments);
 
       await fakeAppointmentRepository.create({
         provider_id: providerId,
@@ -37,6 +37,11 @@ describe('List Provider Month Availability', () => {
 
       })
     })();
+
+    // Mocando new Date();
+    jest.useFakeTimers('modern').setSystemTime(
+      new Date(2020, 4, 19, 8),
+    );
 
     const availability = await listProviderMonthAvailability.execute({
       provider_id: providerId,

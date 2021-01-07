@@ -11,26 +11,19 @@ export default class ProvidersAppointmentsController {
       month,
       year,
       day,
-    } = request.body;
+    } = request.query;
 
     const listProvidersAppointments = container
       .resolve(ListProvidersAppointments);
 
     const appointments = await listProvidersAppointments
       .execute({
-        month,
+        month: Number(month),
         provider_id: id,
-        year,
-        day,
+        year: Number(year),
+        day: Number(day),
       });
 
-
-    const formatedAppointments = appointments.map((appointment) => {
-      appointment.provider = classToClass(appointment.provider);
-      appointment.user = classToClass(appointment.user);
-      return appointment;
-    })
-
-    return response.json(formatedAppointments);
+    return response.json(appointments);
   }
 }

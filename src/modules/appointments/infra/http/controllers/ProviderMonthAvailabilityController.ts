@@ -9,15 +9,16 @@ export default class ProviderMonthAvailability {
     const {
       month,
       year,
-    } = request.body;
+    } = request.query;
+
 
     const listProviderMonthAvailability = container.resolve(ListProviderMonthAvailability);
 
     const availability = await listProviderMonthAvailability
       .execute({
-        month,
+        month: Number(month),
         provider_id,
-        year,
+        year: Number(year),
       });
 
     return response.json(availability);

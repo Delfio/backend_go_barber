@@ -32,7 +32,7 @@ class ListProviderDayAvailability {
   }: IRequest): Promise<IResponse> {
     const appointments = await this.appointmentRepository.findAllInDayFromProvider({
       day,
-      month: month - 1,
+      month,
       provider_id,
       year,
     });
@@ -48,7 +48,7 @@ class ListProviderDayAvailability {
     const availability = eachHourArray.map((hour) => {
       const hasAppointmentHour = appointments.find(
         (appointment) => getHours(appointment.date) === hour,
-      )
+      );
 
       const compareDate = new Date(year, month - 1, day, hour)
 

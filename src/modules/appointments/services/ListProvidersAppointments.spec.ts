@@ -2,7 +2,6 @@ import FakeCacheProvider from '@shared/providers/CacheProvider/fakes/FakeCachePr
 import AppointmentsRepositorys from '../repositories/fakes/FakeAppointmentsRepository';
 import ListProvidersAppointmentsService from './ListProvidersAppointments';
 
-
 let listProvidersAppointmentsService: ListProvidersAppointmentsService;
 let appointmentRespository: AppointmentsRepositorys;
 let fkeCacheProvider: FakeCacheProvider;
@@ -34,19 +33,15 @@ describe('List providers appointments', () => {
       }),
     );
 
-    Promise.all(appointments).then(
-      (scheduledAppointments) => {
-        listProvidersAppointmentsService.execute({
-          day,
-          month,
-          provider_id,
-          year,
-        }).then((appointmentsResolver) => {
-          expect(appointmentsResolver).toEqual(scheduledAppointments);
-        })
-      },
-    ).catch((err) => {
-      expect(err).toBeNull();
+    const scheduledAppointments = await Promise.all(appointments);
+
+    const appointmentsResolver = await listProvidersAppointmentsService.execute({
+      day,
+      month: month + 1,
+      provider_id,
+      year,
     })
+
+    expect(appointmentsResolver).toEqual(scheduledAppointments);
   })
 })

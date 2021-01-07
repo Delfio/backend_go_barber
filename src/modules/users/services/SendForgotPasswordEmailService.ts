@@ -38,7 +38,7 @@ export default class SendForgotPasswordEmailService {
         file: path.resolve(__dirname, '..', 'views', 'Forgot_password.hbs'),
         variables: {
           name: user.name,
-          link: `${process.env.APP_WEB_URL}/resetPassword?tks=${userToken.token}`,
+          link: `${process.env.APP_WEB_URL}/reset-password?tks=${userToken.token}`,
         },
       },
     })

@@ -17,11 +17,11 @@ class Appoitment implements AppointmentEntitye {
   @Column()
   user_id: string;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, { lazy: true })
   @JoinColumn({ name: 'provider_id' })
   provider: User;
 
-  @ManyToOne(() => User, { eager: true })
+  @ManyToOne(() => User, { lazy: true })
   @JoinColumn({ name: 'user_id' })
   user: User;
 

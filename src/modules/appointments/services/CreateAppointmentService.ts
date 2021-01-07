@@ -20,7 +20,8 @@ export default class CreateAppointmentService {
     private notificationsRepository: INotificationsRepositories,
     @inject('CacheProvider')
     private cacheProvider: ICacheProvider,
-  ) {}
+  ) {
+  }
 
   public async execute(
     { date, provider_id, user_id }: ICreateAppointmentDTO,
@@ -35,13 +36,13 @@ export default class CreateAppointmentService {
       }
       const appointmentDate = startOfHour(date);
 
-
       if (getHours(appointmentDate) < 8 || getHours(appointmentDate) > 17) {
         throw new AppError('You can only create appointments btween 8am and 5pm!');
       }
 
       const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
         appointmentDate,
+        provider_id,
       );
       if (findAppointmentInSameDate) {
         throw new AppError('This appointment is already booked');
@@ -65,13 +66,13 @@ export default class CreateAppointmentService {
           day: date.getDate(),
         }
 
+        const cacheKey = AppointmentsCacheKey({
+          ...data,
+          provider_id,
+        });
+
         await this.cacheProvider
-          .invalidade(
-            AppointmentsCacheKey({
-              ...data,
-              provider_id,
-            }),
-          );
+          .invalidade(cacheKey);
       })()
 
       return appointment;

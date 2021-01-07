@@ -1,5 +1,7 @@
 import { getRepository, Repository, Between } from 'typeorm';
-import { startOfMonth, endOfMonth } from 'date-fns';
+import {
+  startOfMonth, endOfMonth, startOfDay, endOfDay,
+} from 'date-fns';
 import IAppointmentRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 import Appointment from '@modules/appointments/infra/typeorm/entities/Appointments';
 import {
@@ -7,7 +9,6 @@ import {
   IFindAllAvailableTimesForAProviderInAMonth,
   IFindAllInMonthFromProviderRequest,
 } from '@modules/appointments/dtos';
-
 
 class AppointmentsRepositorys
 implements IAppointmentRepository {
@@ -17,11 +18,10 @@ implements IAppointmentRepository {
     this.ormRepository = getRepository(Appointment);
   }
 
-  public async findByDate(date: Date): Promise<Appointment | undefined> {
+  public async findByDate(date: Date, provider_id: string): Promise<Appointment | undefined> {
     const appointmentExists = await this.ormRepository.findOne({
-      where: { date },
+      where: { date, provider_id },
     });
-
 
     return appointmentExists;
   }
@@ -45,7 +45,7 @@ implements IAppointmentRepository {
       year,
     }: IFindAllInMonthFromProviderRequest,
   ): Promise<Appointment[]> {
-    const currentDate = new Date(year, month);
+    const currentDate = new Date(year, month - 1);
 
     /**
      * Raw(dateFieldName => `to_char(${dateFieldName}, 'MM-YYYY') = '${month}-${yar}'`)
@@ -61,7 +61,6 @@ implements IAppointmentRepository {
       },
     });
 
-
     return appointments;
   }
 
@@ -73,16 +72,17 @@ implements IAppointmentRepository {
       year,
     }: IFindAllAvailableTimesForAProviderInAMonth,
   ): Promise<Appointment[]> {
-    const currentDate = new Date(year, month, day);
+    const currentDate = new Date(year, month - 1, day);
 
     return this.ormRepository.find({
       where: {
         provider_id,
         date: Between(
-          startOfMonth(currentDate),
-          endOfMonth(currentDate),
+          startOfDay(currentDate),
+          endOfDay(currentDate),
         ),
       },
+      relations: ['user'],
     });
   }
 }

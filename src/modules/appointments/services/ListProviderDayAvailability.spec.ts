@@ -20,23 +20,23 @@ describe('List Provider Day Availability', () => {
         15, 16,
       ];
 
-      const app = eachOfHours.map((hour) => fakeAppointmentRepository.create({
+      const appointments = eachOfHours.map((hour) => fakeAppointmentRepository.create({
         provider_id: providerId,
         date: new Date(2020, 4, 20, hour),
         user_id: 'd5f4d5f4-5d4f5d45f4df54-d54f5df4d4f54',
-
       }))
-      jest.spyOn(Date, 'now').mockImplementationOnce(() => new Date(2020, 4, 20, 11).getTime())
 
-      await Promise.all(app);
-
-      await fakeAppointmentRepository.create({
+      appointments.push(fakeAppointmentRepository.create({
         provider_id: providerId,
         date: new Date(2020, 4, 21, 8),
         user_id: 'd5f4d5f4-5d4f5d45f4df54-d54f5df4d4f54',
+      }));
 
-      })
+      await Promise.all(appointments);
     })();
+
+    jest.spyOn(Date, 'now').mockImplementationOnce(() => new Date(2020, 4, 20, 11).getTime())
+
 
     const availability = await listProviderDayAvailability.execute({
       provider_id: providerId,
@@ -45,17 +45,17 @@ describe('List Provider Day Availability', () => {
       day: 20,
     });
 
-    expect(availability).toEqual(expect.arrayContaining([
+    await expect(availability).toEqual(expect.arrayContaining([
       { hour: 8, available: false },
       { hour: 9, available: false },
       { hour: 10, available: false },
       { hour: 11, available: false },
       { hour: 12, available: true },
       { hour: 13, available: true },
+      { hour: 14, available: true },
       { hour: 15, available: false },
       { hour: 16, available: false },
       { hour: 17, available: true },
-      { hour: 14, available: true },
     ]));
   });
 })

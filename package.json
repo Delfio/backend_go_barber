@@ -8,7 +8,8 @@
     "dev:start": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modulest src/shared/infra/http/server.ts",
     "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
     "server:start": "node dist/shared/infra/http/server.js",
-    "test": "jest --passWithNoTests"
+    "test": "jest --passWithNoTests",
+    "test1": "jest src/modules/appointments/services/ListProviderMonthAvailability.spec.ts"
   },
   "husky": {
     "hooks": {
